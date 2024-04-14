@@ -12,8 +12,14 @@ jobs:
         run: ./decrypt_secret.sh
         env:
           GOOGLE_API_PW: ${{ secrets.GOOGLE_API_PW }}
-      # This command is just an example to show your secret being printed
-      # Ensure you remove any print statements of your secrets. GitHub does
-      # not hide secrets that use this workaround.
-      - name: Test printing your secret (Remove this step in production)
-        run: cat $HOME/secrets/credentials.json
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Use decrypted credentials
+        run: |
+          python your_script.py
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          GG_ID: ${{ secrets.GG_ID }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}

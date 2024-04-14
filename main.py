@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from telegram import Bot
 from telegram.error import TelegramError
 import gspread
+from gspread.exceptions import APIError
 from oauth2client.service_account import ServiceAccountCredentials
 from dotenv import load_dotenv
 import asyncio
@@ -16,7 +17,8 @@ CHAT_ID = os.getenv('CHAT_ID')
 # Устанавливаем параметры доступа к Google Sheets API
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('/Users/sashafyodorov/Projects/tasks_bot/credentials.json', scope)
+#creds = ServiceAccountCredentials.from_json_keyfile_name('/Users/sashafyodorov/Projects/tasks_bot/credentials.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(os.environ['HOME'], 'secrets', 'credentials.json'), scope)
 client = gspread.authorize(creds)
 
 # ID вашей Google таблицы
@@ -61,10 +63,16 @@ telegram_chat_id = CHAT_ID
 
 bot = Bot(token=telegram_token)
 async def send_messages():
-    try:
-        await bot.send_message(chat_id=telegram_chat_id, text=work_message)
-        await bot.send_message(chat_id=telegram_chat_id, text=personal_message)
-    except TelegramError as e:
-        print("Ошибка отправки сообщения в Telegram:", e)
+    for li in range(5):  # Попробовать отправить сообщение не более 5 раз
+        try:
+            await bot.send_message(chat_id=telegram_chat_id, text=work_message)
+            await bot.send_message(chat_id=telegram_chat_id, text=personal_message)
+            break  # Если сообщения отправлены успешно, выйти из цикла
+        except (TelegramError, APIError) as e:
+            print("Ошибка отправки сообщения:", e)
+            await asyncio.sleep(10)  # Подождать 1 секунду перед повторной попыткой
+    else:
+        print("Не удалось отправить сообщения после 5 попыток.")
 
+bot = Bot(token=telegram_token)
 asyncio.run(send_messages())
