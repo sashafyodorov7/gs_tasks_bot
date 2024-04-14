@@ -18,7 +18,7 @@ jobs:
 
       - name: Use decrypted credentials
         run: |
-          python your_script.py
+          python main.py
         env:
           TOKEN: ${{ secrets.TOKEN }}
           GG_ID: ${{ secrets.GG_ID }}
