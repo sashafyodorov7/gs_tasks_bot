@@ -2,7 +2,7 @@ name: Daily tasks bot
 
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   my-job:
