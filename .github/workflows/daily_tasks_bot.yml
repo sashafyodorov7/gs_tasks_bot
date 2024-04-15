@@ -1,6 +1,7 @@
 name: Daily tasks bot
 
 on:
+  push:
   schedule:
     - cron: '*/15 * * * *'
 
