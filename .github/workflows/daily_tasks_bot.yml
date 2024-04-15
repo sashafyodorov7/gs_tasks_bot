@@ -2,7 +2,8 @@ name: Daily tasks bot
 
 on:
   schedule:
-    - cron: "0 10 * * *" # Каждый день в 10:00 утра
+    - cron: '0 10 * * * '
+    - cron: '* * * * *'
 
 jobs:
   my-job:
