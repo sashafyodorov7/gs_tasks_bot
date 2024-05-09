@@ -46,12 +46,12 @@ def format_message(tasks, task_type):
     return message
 
 # Получаем текущую дату
-#today = datetime.now().strftime('%Y-%m-%d')
+today = datetime.now().strftime('%Y-%m-%d')
 
 # Получаем рабочие и личные задачи на сегодня
 # добавить если нужно отправлять задачи на сегодня if task[0]['dt'] == today
-work_tasks = [task[0] for task in get_tasks_from_sheet('WorkTasks')]
-personal_tasks = [task[0] for task in get_tasks_from_sheet('PersonalTasks')]
+work_tasks = [task[0] for task in get_tasks_from_sheet('WorkTasks') if task[0]['dt'] == today]
+personal_tasks = [task[0] for task in get_tasks_from_sheet('PersonalTasks') if task[0]['dt'] == today]
 
 
 # Формируем сообщение
@@ -73,7 +73,7 @@ async def send_messages():
             print("Ошибка отправки сообщения:", e)
             await asyncio.sleep(10)  # Подождать 1 секунду перед повторной попыткой
     else:
-        print("Не удалось отправить сообщения после 5 попыток .")
+        print("Не удалось отправить сообщения после 5 попыток.")
 
 bot = Bot(token=telegram_token)
 asyncio.run(send_messages())
