@@ -3,7 +3,7 @@ name: Daily tasks bot
 on:
   push:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 7 * * *'
 
 jobs:
   my-job:
