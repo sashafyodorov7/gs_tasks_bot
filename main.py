@@ -46,12 +46,12 @@ def format_message(tasks, task_type):
     return message
 
 # Получаем текущую дату
-today = datetime.now().strftime('%Y-%m-%d')
+#today = datetime.now().strftime('%Y-%m-%d')
 
 # Получаем рабочие и личные задачи на сегодня
 # добавить если нужно отправлять задачи на сегодня if task[0]['dt'] == today
-work_tasks = [task[0] for task in get_tasks_from_sheet('WorkTasks') if task[0]['dt'] == today]
-personal_tasks = [task[0] for task in get_tasks_from_sheet('PersonalTasks') if task[0]['dt'] == today]
+work_tasks = [task[0] for task in get_tasks_from_sheet('WorkTasks')]
+personal_tasks = [task[0] for task in get_tasks_from_sheet('PersonalTasks')]
 
 
 # Формируем сообщение
