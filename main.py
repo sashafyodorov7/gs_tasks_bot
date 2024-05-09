@@ -73,7 +73,7 @@ async def send_messages():
             print("Ошибка отправки сообщения:", e)
             await asyncio.sleep(10)  # Подождать 1 секунду перед повторной попыткой
     else:
-        print("Не удалось отправить сообщения после 5 попыток.")
+        print("Не удалось отправить сообщения после 5 попыток .")
 
 bot = Bot(token=telegram_token)
 asyncio.run(send_messages())
